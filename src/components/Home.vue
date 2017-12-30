@@ -90,6 +90,9 @@
                       <li>
                         <router-link to="/home/orderType">订单类型管理</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/commonContact">常用联系人管理</router-link>
+                      </li>
                     </ul>
                   </li>
                   <!-- /main -->
@@ -236,6 +239,8 @@
     }
   }
 </script>
-<style scoped>
-
+<style>
+.el-loading-spinner .circular{
+  margin-left: 50%;
+}
 </style>

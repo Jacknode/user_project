@@ -79,5 +79,7 @@ export default {
     //   return typeName;
     // }
     return state.userScoreList
-  }
+  },
+  //常用联系人
+  contactNameList: state => state.contactNameList,
 }

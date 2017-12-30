@@ -23,6 +23,7 @@ const state = {
   initLntegrationWeight: {}, //初始化修改权重
   dateArr: [], //开始日期和结束日期
   userScoreList: [], //用户积分明细
+  contactNameList:[],//常用联系人
 };
 const mutations = {
   clearAll(state){
@@ -222,6 +223,10 @@ const mutations = {
   //查询失败清空用户明细
   clearUserScore(state) {
     state.userScoreList = [];
+  },
+  //初始化常用联系人
+  initContactNameData(state,data){
+    state.contactNameList = data;
   }
 };
 //浅拷贝
