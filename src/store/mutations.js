@@ -24,6 +24,7 @@ const state = {
   dateArr: [], //开始日期和结束日期
   userScoreList: [], //用户积分明细
   contactNameList:[],//常用联系人
+  initSystemDataList: [],//查询系统信息数据
 };
 const mutations = {
   clearAll(state){
@@ -225,10 +226,25 @@ const mutations = {
     state.userScoreList = [];
   },
   //初始化常用联系人
-  initContactNameData(state,data){
+  initContactNameData(state,data) {
+    console.log(data)
     state.contactNameList = data;
+  },
+  //查询系统信息
+  initSystemData(state,data){
+    state.initSystemDataList = data;
   }
+
 };
+
+
+
+
+
+
+
+
+
 //浅拷贝
 function getObj(obj) {
   var dst = {};

@@ -35,18 +35,6 @@ export default {
   },
   //订单详情
   orderListKeyWord(state){
-    // state.orderListKeyWord.forEach(item=>{
-    //   item.oi_TypeName = getTypeName(item.oi_ID);
-    // });
-    // function getTypeName(id) {
-    //   var typeName = '';
-    //   state.OrderTypeListKeyWord.forEach(item=>{
-    //     if(item.ot_ID==id){
-    //       typeName = item.ot_TypeName
-    //     }
-    //   });
-    //   return typeName;
-    // }
     return state.orderListKeyWord;
   },
   //权重信息
@@ -66,20 +54,11 @@ export default {
   },
   //用户积分明细
   userScoreList(state){
-    // state.userScoreList.forEach(item=>{
-    //   item.userScoreName = getTypeName(item.usd_ID);
-    // });
-    // function getTypeName(id) {
-    //   var typeName = '';
-    //   state.userLntegrationWeightKeyWord.forEach(item=>{
-    //     if(item.hm_ID==id){
-    //       typeName = item.hm_Name
-    //     }
-    //   });
-    //   return typeName;
-    // }
     return state.userScoreList
   },
   //常用联系人
   contactNameList: state => state.contactNameList,
+  //系统信息查询数据
+  initSystemDataList:state => state.initSystemDataList
+
 }

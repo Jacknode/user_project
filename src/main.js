@@ -11,6 +11,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import qs from 'qs';
+
 axios.interceptors.request.use((config) => {
   config.data = qs.stringify(config.data);
   return config;
@@ -22,6 +23,7 @@ Vue.use(ElementUI);
 Vue.prototype.$http = axios;
 
 Vue.config.productionTip = false;
+
 
 /* eslint-disable no-new */
 new Vue({

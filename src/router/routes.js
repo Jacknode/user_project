@@ -16,6 +16,8 @@ import UserLntegrationWeight from '@/components/UserLntegrationWeight'
 import OrderType from '@/components/OrderType'
 //常用联系人
 import CommonContact from '@/components/CommonContact'
+//系统信息
+import SystemInformation from '@/components/SystemInformation'
 export default [
   , {
     path: '/',
@@ -65,6 +67,12 @@ export default [
         User: CommonContact
       },
       name:'CommonContact'
+    }, {
+      path: 'systemInformation',
+      components: {
+        default: Home,
+        User: SystemInformation
+      }
     }]
   }, {
     path: '*',
