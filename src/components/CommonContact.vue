@@ -66,6 +66,43 @@
         </tr>
         </tbody>
       </table>
+
+      <!--添加-->
+      <el-dialog title="添加常用联系人" :visible.sync="dialogAddFormVisible" width="60%">
+        <el-form :model="addCommonContactList">
+          <el-form-item label="所属游客标识" :label-width="formLabelWidth" :required="isOff">
+            <el-input auto-complete="off" v-model="addCommonContactList.userInfoID"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" :required="isOff" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.name"></el-input>
+          </el-form-item>
+          <el-form-item label="电话号码" :required="isOff" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.phone"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.certNo"></el-input>
+          </el-form-item>
+          <el-form-item label="所属省份" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.provice"></el-input>
+          </el-form-item>
+          <el-form-item label="所属市" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.city"></el-input>
+          </el-form-item>
+          <el-form-item label="所属县" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.contry"></el-input>
+          </el-form-item>
+          <el-form-item label="详细地址" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.address"></el-input>
+          </el-form-item>
+          <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-input auto-complete="off" v-model="addCommonContactList.remark"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogAddFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addSubmit">提交</el-button>
+        </div>
+      </el-dialog>
     </div>
 </template>
 <script>
@@ -74,10 +111,13 @@
     name: '',
     data(){
       return {
+        formLabelWidth: '120px',
         contactName:'',
         isContactName:'',
         isDelete:'',
+        isOff:true,
         isLoading:false,
+        dialogAddFormVisible: false,
         options:[
           {
             value: '0',
@@ -95,7 +135,18 @@
             value: '1',
             label: '已删除'
           }
-        ]
+        ],
+        addCommonContactList:{
+          userInfoID:'',
+          name:'',
+          phone:'',
+          certNo:'',
+          provice:'',
+          city:'',
+          contry:'',
+          address:'',
+          remark:''
+        }
       }
     },
     computed: mapGetters([
@@ -113,7 +164,8 @@
         };
         this.isLoading = true;
         this.$store.dispatch('initContactNameData',initValue)
-        .then(()=>{
+        .then((total)=>{
+          this.total = total;
           this.isLoading = false;
         },err=>{
           this.$notify({
@@ -129,15 +181,12 @@
           isUrgent:this.isContactName,
           isDelete:this.isDelete
         })
-      },
-      //添加
-      addCommonContact(){
-
-      },
-
+      }
     },
   }
 </script>
 <style scoped>
-
+  .block{
+    float:right;
+  }
 </style>

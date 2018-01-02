@@ -22,7 +22,7 @@ export default {
           var data = data.data;
           if (Number(data.backCode) == 200) {
             commit('initContactNameData', data.usualConnectList)
-            relove()
+            relove(data.total)
           } else {
             reject(data.backResult)
           }
@@ -47,6 +47,26 @@ export default {
             commit('initSystemData', data.data)
           } else {
             reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改查询系统
+  UpdateSystemPorp({commit},data){
+    return new Promise(function(relove,reject){
+      axios.post('http://114.55.248.116:1001/Service.asmx/UpdateSystemInfo', {
+        paramJson: JSON.stringify(data)
+      }, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data=>{
+          var data = data.data;
+          if(Number(data.resultcode) == 200){
+            relove(data.resultcontent);
+          }else{
+            reject(data.resultcontent);
           }
         })
     })

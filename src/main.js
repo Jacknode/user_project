@@ -11,6 +11,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import qs from 'qs';
+import * as filters from './filters'
 
 axios.interceptors.request.use((config) => {
   config.data = qs.stringify(config.data);
@@ -18,6 +19,10 @@ axios.interceptors.request.use((config) => {
 }, function(error) {
   return Promise.reject(error);
 });
+// 遍历所有导出的过滤器并添加到全局过滤器
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+})
 
 Vue.use(ElementUI);
 Vue.prototype.$http = axios;
@@ -30,6 +35,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  filters,
   template: '<App/>',
   components: { App }
 });

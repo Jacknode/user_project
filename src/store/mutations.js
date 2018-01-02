@@ -25,6 +25,7 @@ const state = {
   userScoreList: [], //用户积分明细
   contactNameList:[],//常用联系人
   initSystemDataList: [],//查询系统信息数据
+  updateSystemObj:{},//系统修改初始化数据Obj
 };
 const mutations = {
   clearAll(state){
@@ -227,12 +228,21 @@ const mutations = {
   },
   //初始化常用联系人
   initContactNameData(state,data) {
-    console.log(data)
     state.contactNameList = data;
   },
   //查询系统信息
   initSystemData(state,data){
-    state.initSystemDataList = data;
+    state.initSystemDataList = []
+    state.initSystemDataList.push(data);
+  },
+  //修改初始化数据Obj
+  initUpdateSystemObj(statem,id){
+    state.updateSystemObj = state.initSystemDataList.filter(item=>{
+      if(item.ts_si_ID == id){
+        return true
+      }
+      return false;
+    })[0]
   }
 
 };

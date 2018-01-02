@@ -95,7 +95,7 @@
 
                       </li>
                       <li>
-                        <router-link to="/home/systemInformation">系统信息</router-link>
+                        <router-link to="/home/systemInformation">系统信息管理</router-link>
                       </li>
                     </ul>
                   </li>
