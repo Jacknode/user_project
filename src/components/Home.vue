@@ -76,10 +76,10 @@
                     <a href="javascript:;"><i class="icon-stack2"></i> <span>用户信息管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="/home/users">用户信息</router-link>
+                        <router-link to="/home/users">用户信息管理</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/profile">用户订单详情</router-link>
+                        <router-link to="/home/profile">用户订单管理</router-link>
                       </li>
                       <li>
                         <router-link to="/home/lntegration">用户积分明细管理</router-link>
@@ -100,7 +100,7 @@
                         <router-link to="/home/systemData">系统资料管理</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/integralType">积分类型</router-link>
+                        <router-link to="/home/integralType">积分类型管理</router-link>
                       </li>
                     </ul>
                   </li>
@@ -239,6 +239,8 @@
     methods: {
       //退出
       Quit() {
+        sessionStorage.removeItem('admin');
+        sessionStorage.removeItem('isLogin');
         this.$router.push({name: 'Login'})
       },
       //用户信息

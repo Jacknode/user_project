@@ -1,39 +1,40 @@
 import getters from './getters';
 const state = {
-  loadingShow:false,
-  //初始化动画
-  transtionActive: {
-    isActive: false,
-    isRotateInDownRight: false
-  },
-  userInfo: {},
-  userInfoList: [],
-  userInfoListKeyWord: [],
-  initUser: {},
-  //订单类型
-  OrderTypeList: [],
-  OrderTypeListKeyWord: [],
-  initType: {},
-  //订单详情
-  orderList: [],
-  orderListKeyWord: [],
-  //积分权重
-  userLntegrationWeight: [],
-  userLntegrationWeightKeyWord: [],
-  initLntegrationWeight: {}, //初始化修改权重
-  dateArr: [], //开始日期和结束日期
-  userScoreList: [], //用户积分明细
-  contactNameList:[],//常用联系人
-  initSystemDataList: [],//查询系统信息数据
-  updateSystemObj:{},//系统修改初始化数据Obj
-  systemDataList:[],//查询系统资料
-  searshIntegralTypeList:[],//查询积分类型
-  updateIntegralTypeObj:{},//修改积分类型
-};
+    loadingShow: false,
+    //初始化动画
+    transtionActive: {
+      isActive: false,
+      isRotateInDownRight: false
+    },
+    userInfo: {},
+    userInfoList: [],
+    userInfoListKeyWord: [],
+    initUser: {},
+    //订单类型
+    OrderTypeList: [],
+    OrderTypeListKeyWord: [],
+    initType: {},
+    //订单详情
+    orderList: [],
+    orderListKeyWord: [],
+    //积分权重
+    userLntegrationWeight: [],
+    userLntegrationWeightKeyWord: [],
+    initLntegrationWeight: {}, //初始化修改权重
+    dateArr: [], //开始日期和结束日期
+    userScoreList: [], //用户积分明细
+    contactNameList: [],//常用联系人
+    initSystemDataList: [],//查询系统信息数据
+    updateSystemObj: {},//系统修改初始化数据Obj
+    systemDataList: [],//查询系统资料
+    searshIntegralTypeList: [],//查询积分类型
+    updateIntegralTypeObj: {},//修改积分类型
+    updateSystemDataObj: {}//初始化修改资料obj
+  };
 const mutations = {
   clearAll(state){
-    for(var attr in state){
-      if(state[attr].constructor==Array){
+    for (var attr in state) {
+      if (state[attr].constructor == Array) {
         state[attr] = []
       }
     }
@@ -184,7 +185,7 @@ const mutations = {
   //添加权重
   AddHeightItem(state, data) {
     state.userLntegrationWeightKeyWord.push({hm_Code: data.hmCode, hm_Name: data.hmName, hm_Percent: data.percent});
-    state.userLntegrationWeightKeyWord.sort(function(a, b) {
+    state.userLntegrationWeightKeyWord.sort(function (a, b) {
       return Number(a.hm_Code) - Number(b.hm_Code);
     })
   },
@@ -230,39 +231,53 @@ const mutations = {
     state.userScoreList = [];
   },
   //初始化常用联系人
-  initContactNameData(state,data) {
+  initContactNameData(state, data) {
     state.contactNameList = data;
   },
   //查询系统信息
-  initSystemData(state,data){
+  initSystemData(state, data){
     state.initSystemDataList = [];
     state.initSystemDataList.push(data);
   },
   //修改初始化数据Obj
-  initUpdateSystemObj(state,id){
-    state.updateSystemObj = state.initSystemDataList.filter(item=>{
-      if(item.ts_si_ID == id){
+  initUpdateSystemObj(state, id){
+    state.updateSystemObj = state.initSystemDataList.filter(item => {
+      if (item.ts_si_ID == id) {
         return true
       }
       return false;
     })[0]
   },
   //查询系统资料
-  initSystemDataList(state,data){
+  initSystemDataList(state, data){
     state.systemDataList = data;
   },
-  //查询积分类型
-  searshIntegralTypeList(state,data){
+//查询积分类型
+  searshIntegralTypeList(state, data)
+  {
     state.searshIntegralTypeList = data;
-  },
-  //修改积分类型
-  initupdateIntegralType(state,id){
-    state.updateIntegralTypeObj = state.searshIntegralTypeList.filter(item=>{
-      if(item.ts_at_TypeID == id){
+  }
+  ,
+//修改积分类型
+  initupdateIntegralType(state, id)
+  {
+    state.updateIntegralTypeObj = state.searshIntegralTypeList.filter(item => {
+      if (item.ts_at_TypeID == id) {
         return true
       }
       return false
     })[0]
+  },
+//修改系统资料obj
+  initUpdateSystemDataObj(state, id)
+  {
+    state.updateSystemDataObj = state.systemDataList.filter(item => {
+      if (item.ts_if_ID == id) {
+        return true
+      }
+      return false;
+    })[0]
+
   }
 };
 
