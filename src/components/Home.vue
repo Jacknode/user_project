@@ -99,6 +99,9 @@
                       <li>
                         <router-link to="/home/systemData">系统资料管理</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/integralType">积分类型</router-link>
+                      </li>
                     </ul>
                   </li>
                   <!-- /main -->

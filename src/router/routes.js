@@ -20,6 +20,9 @@ import CommonContact from '@/components/CommonContact'
 import SystemInformation from '@/components/SystemInformation'
 //系统资料
 import SystemData from '@/components/SystemData'
+//积分类型
+import IntegralType from '@/components/IntegralType'
+
 export default [
   {
     path: '/',
@@ -76,14 +79,21 @@ export default [
         User: SystemInformation
       }
     },
-      {
-        path: 'systemData',
+    {
+      path: 'systemData',
+      components: {
+        default: Home,
+        User: SystemData
+      },
+      name: 'SystemData'
+    },{
+        path: 'integralType',
         components: {
           default: Home,
-          User: SystemData
+          User: IntegralType
         },
-        name: 'SystemData'
-      }]
+        name: 'IntegralType'
+    }]
   }, {
     path: '*',
     redirect: {

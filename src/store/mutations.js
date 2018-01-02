@@ -27,6 +27,8 @@ const state = {
   initSystemDataList: [],//查询系统信息数据
   updateSystemObj:{},//系统修改初始化数据Obj
   systemDataList:[],//查询系统资料
+  searshIntegralTypeList:[],//查询积分类型
+  updateIntegralTypeObj:{},//修改积分类型
 };
 const mutations = {
   clearAll(state){
@@ -248,6 +250,19 @@ const mutations = {
   //查询系统资料
   initSystemDataList(state,data){
     state.systemDataList = data;
+  },
+  //查询积分类型
+  searshIntegralTypeList(state,data){
+    state.searshIntegralTypeList = data;
+  },
+  //修改积分类型
+  initupdateIntegralType(state,id){
+    state.updateIntegralTypeObj = state.searshIntegralTypeList.filter(item=>{
+      if(item.ts_at_TypeID == id){
+        return true
+      }
+      return false
+    })[0]
   }
 };
 

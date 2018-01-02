@@ -140,7 +140,6 @@
         var UpdateSystemInfo={
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "orderID": 0,
           "data": {
             "ts_si_ID": this.updateSystemObj.ts_si_ID,
             "ts_si_SystemName": this.updateSystemObj.ts_si_SystemName,
