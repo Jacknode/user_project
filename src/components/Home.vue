@@ -94,7 +94,10 @@
                         <router-link to="/home/commonContact">常用联系人管理</router-link>
                       </li>
                       <li>
-                        <!--<router-link to="/home/systemInformation">系统信息管理</router-link>-->
+                        <router-link to="/home/systemInformation">系统信息管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/systemData">系统资料管理</router-link>
                       </li>
                     </ul>
                   </li>

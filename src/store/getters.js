@@ -60,6 +60,7 @@ export default {
   contactNameList: state => state.contactNameList,
   //系统信息查询数据
   initSystemDataList: state => state.initSystemDataList,
-  updateSystemObj: state => state.updateSystemObj
+  updateSystemObj: state => state.updateSystemObj,
+  systemDataList: state => state.systemDataList,
 
 }

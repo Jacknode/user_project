@@ -26,6 +26,7 @@ const state = {
   contactNameList:[],//常用联系人
   initSystemDataList: [],//查询系统信息数据
   updateSystemObj:{},//系统修改初始化数据Obj
+  systemDataList:[],//查询系统资料
 };
 const mutations = {
   clearAll(state){
@@ -232,27 +233,23 @@ const mutations = {
   },
   //查询系统信息
   initSystemData(state,data){
-    state.initSystemDataList = []
+    state.initSystemDataList = [];
     state.initSystemDataList.push(data);
   },
   //修改初始化数据Obj
-  initUpdateSystemObj(statem,id){
+  initUpdateSystemObj(state,id){
     state.updateSystemObj = state.initSystemDataList.filter(item=>{
       if(item.ts_si_ID == id){
         return true
       }
       return false;
     })[0]
+  },
+  //查询系统资料
+  initSystemDataList(state,data){
+    state.systemDataList = data;
   }
-
 };
-
-
-
-
-
-
-
 
 
 //浅拷贝

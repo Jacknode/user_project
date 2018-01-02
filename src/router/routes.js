@@ -18,8 +18,10 @@ import OrderType from '@/components/OrderType'
 import CommonContact from '@/components/CommonContact'
 //系统信息
 import SystemInformation from '@/components/SystemInformation'
+//系统资料
+import SystemData from '@/components/SystemData'
 export default [
-  , {
+  {
     path: '/',
     name: 'Login',
     component: Login
@@ -60,20 +62,28 @@ export default [
         default: Home,
         User: OrderType
       },
-    },{
+    }, {
       path: 'commonContact',
       components: {
         default: Home,
         User: CommonContact
       },
-      name:'CommonContact'
+      name: 'CommonContact'
     }, {
       path: 'systemInformation',
       components: {
         default: Home,
         User: SystemInformation
       }
-    }]
+    },
+      {
+        path: 'systemData',
+        components: {
+          default: Home,
+          User: SystemData
+        },
+        name: 'SystemData'
+      }]
   }, {
     path: '*',
     redirect: {
