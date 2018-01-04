@@ -201,45 +201,20 @@
       },
       //添加用户提交
       addSubmit() {
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/AddUser', {
-          paramJson: JSON.stringify(this.form)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            if (Number(data.resultcode) == 200) {
-              this.$message({
-                showClose: true,
-                message: data.resultcontent,
-                type: 'success'
-              });
-              this.initData(1)
-            } else {
-              this.$message({
-                showClose: true,
-                message: data.resultcontent,
-                type: 'error'
-              });
-            }
-            this.dialogFormVisible = false
-            this.$store.dispatch('addUser', this.form)
-              .then(() => {
-                this.$notify({
-                  message: '添加成功！',
-                  type: 'success'
-                });
-                this.initData(1);
-              }, err => {
-                this.$notify({
-                  message: err,
-                  type: 'error'
-                });
-              })
-            this.dialogFormVisible = false;
+        this.$store.dispatch('addUser', this.form)
+          .then(() => {
+            this.$notify({
+              message: '添加成功！',
+              type: 'success'
+            });
+            this.initData(1);
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
           })
+        this.dialogFormVisible = false;
       },
       //修改用户提交
       updateSubmit() {
