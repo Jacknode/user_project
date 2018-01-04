@@ -34,7 +34,7 @@
                   <i class="icon-menu9"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a href="javascript:;" @click="deleteOrder(item.oi_OrderID)"><i class="icon-delicious"></i> 删除</a>
+                  <li><a href="javascript:;" @click="deleteOrderBtn(item.oi_OrderID)"><i class="icon-delicious"></i> 删除</a>
                   </li>
                 </ul>
               </li>
@@ -86,22 +86,10 @@
           orderID:orderID?orderID:'',
           page: num,
           rows: 5
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/GetOrderList', {
-          paramJson: JSON.stringify(GetOrderList)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            console.log(data)
-            this.total = Number(data.total);
-            if (data.backCode == '200') {
-              this.$store.commit('initOrderList', data.orderInfoList);
-              this.$store.commit('initOrderListKeyWord', data.orderInfoList);
-            }
+        };
+        this.$store.dispatch('initOrdersSearch',GetOrderList)
+          .then(total=>{
+            this.total = Number(total);
           })
       },
       //订单号筛选
@@ -110,31 +98,14 @@
         this.initData(1, this.orderDetail)
       },
       //删除订单
-      deleteOrder(id) {
-        var DeleteOrder = {
-          loginUserID: 'huileyou',
-          loginUserPass: 123,
-          orderCode: id
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/DeleteOrder',{
-          paramJson:JSON.stringify(DeleteOrder)
-        },{
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data=>{
-            var data =data.data;
-            publicInit.isBackCode(data, this)
-            if (Number(data.backCode) == 200) {
-              this.$store.commit('filterOrder', id);
-              this.initData(1)
-            }
-            this.$message({
-              showClose: true,
-              message: data.backResult,
+      deleteOrderBtn(id) {
+        this.$store.dispatch('deleteOrder',id)
+          .then(()=>{
+            this.$notify({
+              message: '删除订单成功！',
               type: 'success'
             });
+            this.initData(1)
           })
       }
     },

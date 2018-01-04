@@ -119,20 +119,7 @@
           operateUserName: '',
           pcName: ''
         }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/GetHeightPercent', {
-          paramJson: JSON.stringify(GetHeightPercent)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            if (data.backCode == '200') {
-              this.$store.commit('initUserLntegrationWeight', data.heightManageList);
-              this.$store.commit('initUserLntegrationWeightKeyWord', data.heightManageList);
-            }
-          })
+        this.$store.dispatch('initWeightInformation',GetHeightPercent)
       },
       //添加点击
       addWeight() {
@@ -151,26 +138,15 @@
           operateUserName: '',
           pcName: ''
         }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/AddHeightItem', {
-          paramJson: JSON.stringify(AddHeightItem)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (Number(data.backCode) == 200) {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData();
-            }
-            this.addUserLntegrationWeight = false
+        this.$store.dispatch('addWeightInformation',AddHeightItem)
+          .then(()=>{
+            this.$notify({
+              message: '添加成功！',
+              type: 'success'
+            });
+            this.initData();
           })
+        this.addUserLntegrationWeight = false
       },
       //修改积分权重
       UpdateLntegrationWeight(code) {
@@ -189,26 +165,20 @@
           operateUserName: '',
           pcName: ''
         }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/UpdateHeightPercent', {
-          paramJson: JSON.stringify(UpdateHeightPercent)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (Number(data.backCode) == 200) {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData();
-            }
-            this.updateUserLntegrationWeight = false
+        this.$store.dispatch('updateUserLntegrationWeight',UpdateHeightPercent)
+          .then(()=>{
+            this.$notify({
+              message: '修改成功！',
+              type: 'success'
+            });
+            this.initData();
+          },err=>{
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
           })
+        this.updateUserLntegrationWeight = false
       },
       //删除权重
       deleteLntegrationWeight(id) {
@@ -219,24 +189,14 @@
           operateUserID: '',
           operateUserName: '',
           pcName: ''
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/DeleteHeightPercent', {
-          paramJson: JSON.stringify(DeleteHeightPercent)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            if (Number(data.backCode) == 200) {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData();
-            }
+        };
+        this.$store.dispatch('deleteUserLntegrationWeight',DeleteHeightPercent)
+          .then(()=>{
+            this.$notify({
+              message: '删除成功！',
+              type: 'success'
+            });
+            this.initData();
           })
       }
     },

@@ -120,27 +120,15 @@
           page:num,
           rows:5,
         }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/GetScoreList',{
-          paramJson: JSON.stringify(GetScoreList)
-        },{
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data=>{
-            var data = data.data;
-            this.total = Number(data.total);
-            publicInit.isBackCode(data,this);
-            if(Number(data.backCode)==200){
-              this.$store.commit('initUserScore',data.userScoreDetailList)
-            }else{
-              this.$message({
-                showClose: true,
-                message: '查询失败',
-                type: 'error'
-              });
-              this.$store.commit('clearUserScore')
-            }
+        this.$store.dispatch('userIntegralDetailed',GetScoreList)
+          .then((total)=>{
+            this.total = Number(total);
+          },()=>{
+            this.$notify({
+              message: '查询失败！',
+              type: 'error'
+            });
+            this.$store.commit('clearUserScore')
           })
       },
       //筛选

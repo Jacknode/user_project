@@ -42,7 +42,8 @@
                   </li>
                   <li><a href="javascript:;" @click="updatePasswordUser(item.ui_UserCode)"><i class="icon-pencil7"></i>
                     密码修改</a></li>
-                  <li><a href="javascript:;" @click="deleteUser(item.ui_UserCode)"><i class="icon-delicious"></i> 删除</a>
+                  <li><a href="javascript:;" @click="deleteUserSubmit(item.ui_UserCode)"><i class="icon-delicious"></i>
+                    删除</a>
                   </li>
                 </ul>
               </li>
@@ -168,23 +169,15 @@
           page: num + '',
           rows: 5 + '',
         };
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/GetUserInfoList', {
-            paramJson: JSON.stringify(userParams)
-          },
-          {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
+        this.$store.dispatch('initUserData', userParams)
+          .then(total => {
+            this.total = Number(total)
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
           })
-          .then(data => {
-            var data = data.data;
-            this.total = Number(data.total);
-            if (data.backCode == '200') {
-              this.$store.commit('setUserInfoList', data.userInfoList)
-              this.$store.commit('setSearchKeyWord', data.userInfoList)
-            }
-            ;
-          });
       },
       handleCurrentChange(num) {
         this.initData(num)
@@ -193,16 +186,17 @@
       search() {
         this.username = this.username.trim();
         this.initData(1, this.username)
+        this.initData(1, this.username);
       },
       //初始化修改数据
       updateUser(id) {
-        this.$store.commit('setTranstionFalse')
+        this.$store.commit('setTranstionFalse');
         this.dialogFormVisibleUpdate = true;
-        this.$store.commit('initUpdateUser', id)
+        this.$store.commit('initUpdateUser', id);
       },
       //添加用户
       addUser() {
-        this.$store.commit('setTranstionFalse')
+        this.$store.commit('setTranstionFalse');
         this.dialogFormVisible = true;
       },
       //添加用户提交
@@ -223,7 +217,7 @@
                 type: 'success'
               });
               this.initData(1)
-            }else{
+            } else {
               this.$message({
                 showClose: true,
                 message: data.resultcontent,
@@ -231,6 +225,20 @@
               });
             }
             this.dialogFormVisible = false
+            this.$store.dispatch('addUser', this.form)
+              .then(() => {
+                this.$notify({
+                  message: '添加成功！',
+                  type: 'success'
+                });
+                this.initData(1);
+              }, err => {
+                this.$notify({
+                  message: err,
+                  type: 'error'
+                });
+              })
+            this.dialogFormVisible = false;
           })
       },
       //修改用户提交
@@ -244,64 +252,44 @@
           certNo: this.newForm.ui_CertNo,
           phone: this.newForm.ui_Phone,
           remark: this.newForm.ui_Remark
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/UpdateUserInfo', {
-          paramJson: JSON.stringify(UpdateUserInfo)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            if (data.backCode == '200') {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData(1);
-            }
-            this.dialogFormVisibleUpdate = false;
-          })
-      }
-      ,
-      //删除用户
-      deleteUser(id) {
-        var DeleteUserInfo = {
-          loginUserID: 'huileyou',
-          loginUserPass: 123,
-          userCode: id
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/DeleteUserInfo', {
-          paramJson: JSON.stringify(DeleteUserInfo)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (data.backCode == '200'){
-              this.$store.commit('filterUserInfo', id);
-              this.initData(1)
-            }
-            this.$message({
-              showClose: true,
-              message: data.backResult,
+        };
+        this.$store.dispatch('updateUser', UpdateUserInfo)
+          .then(() => {
+            this.$notify({
+              message: '修改成功！',
               type: 'success'
             });
+            this.initData(1);
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
           })
-      }
-      ,
+        this.dialogFormVisibleUpdate = false;
+      },
+      //删除用户
+      deleteUserSubmit(id) {
+        this.$store.dispatch('deleteUser', id)
+          .then(() => {
+            this.$notify({
+              message: '删除成功！',
+              type: 'success'
+            });
+            this.initData(1)
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
+          })
+      },
       //密码修改
       updatePasswordUser(userCode) {
         this.$store.commit('setTranstionFalse')
         this.dialogFormUpdatePassword = true;
         this.formPassword.userCode = userCode;
-      }
-      ,
+      },
       //密码修改提交
       dialogUpdatePassword() {
         var UpdateUserInfoPassword = {
@@ -312,28 +300,21 @@
           newPassword: this.formPassword.newPassword
         }
         this.dialogFormUpdatePassword = false;
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/UpdateUserInfoPassword', {
-          paramJson: JSON.stringify(UpdateUserInfoPassword)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (data.backCode == '200') {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData(1)
-            }
-            this.dialogFormUpdatePassword = false;
-          })
-      },
-
+        this.$store.dispatch('updateUserPassword', UpdateUserInfoPassword)
+          .then(() => {
+            this.$notify({
+              message: '密码修改成功！',
+              type: 'success'
+            });
+            this.initData(1)
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
+          });
+        this.dialogFormUpdatePassword = false;
+      }
     },
     computed: mapGetters([
       'userInfoList',

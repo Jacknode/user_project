@@ -102,21 +102,8 @@
           loginUserID: 'huileyou',
           loginUserPass: 123,
           orderTypeCode: ''
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/GetOrderTypeList', {
-          paramJson: JSON.stringify(GetOrderTypeList)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            if (Number(data.backCode) == 200) {
-              this.$store.commit('initOrderType', data.orderTypeList);
-              this.$store.commit('initOrderTypeKeyWord', data.orderTypeList);
-            }
-          })
+        };
+        this.$store.dispatch('initOrderType',GetOrderTypeList)
       },
       //订单类型筛选
       search() {
@@ -136,26 +123,20 @@
           orderTypeCode: this.formType.id,
           orderTypeName: this.formType.name
         }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/AddOrderType', {
-          paramJson: JSON.stringify(AddOrderType)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data => {
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (Number(data.backCode) == 200) {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData();
-            }
-            this.addOrderType = false
+        this.$store.dispatch('addOrderSubmit',AddOrderType)
+          .then(()=>{
+            this.$notify({
+              message: '添加成功！',
+              type: 'success'
+            });
+            this.initData();
+          },err=>{
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
           })
+        this.addOrderType = false;
       },
       //订单类型初始化
       updateInit(id) {
@@ -170,52 +151,28 @@
           loginUserPass: 123,
           orderTypeCode: this.initType.ot_Code,
           orderTypeName: this.initType.ot_TypeName
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/UpdateOrderType',{
-          paramJson:JSON.stringify(UpdateOrderType)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data=>{
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (Number(data.backCode) == 200) {
-              this.$message({
-                showClose: true,
-                message: data.backResult,
-                type: 'success'
-              });
-              this.initData()
-            }
-            this.updateOrderType = false
+        };
+        this.$store.dispatch('updateOrderTypeList',UpdateOrderType)
+          .then(()=>{
+            this.$notify({
+              message: '修改成功！',
+              type: 'success'
+            });
+            this.initData();
+          },err=>{
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
           })
+        this.updateOrderType = false;
       },
       //订单删除
       deleteType(id) {
-        var DeleteOrderType = {
-          loginUserID: 'huileyou',
-          loginUserPass: 123,
-          orderTypeCode: id
-        }
-        this.$http.post('http://114.55.248.116:1001/Service.asmx/DeleteOrderType',{
-          paramJson:JSON.stringify(DeleteOrderType)
-        }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(data=>{
-            var data = data.data;
-            publicInit.isBackCode(data, this)
-            if (Number(data.backCode) == 200) {
-              this.initData()
-              this.$store.commit('filterOrderType', id);
-            }
-            this.$message({
-              showClose: true,
-              message: data.backResult,
+        this.$store.dispatch('deleteOrderTypeId',id)
+          .then(()=>{
+            this.$notify({
+              message: '删除成功！',
               type: 'success'
             });
           })

@@ -51,27 +51,17 @@
           if (valid) {
             this.logining = true;
             var loginParams = { userID: this.ruleForm2.account, password: this.ruleForm2.checkPass,loginUserID:'huileyou',loginUserPass:123 };
-            this.$http.post('http://114.55.248.116:1001/Service.asmx/GetValidateByPassword', {
-              paramJson:JSON.stringify(loginParams)
-            }, {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              }
-            })
-              .then(data=>{
-                this.logining = false;
-                var data = data.data;
-                if(data.backCode==200){
-                  sessionStorage.setItem('admin',data.userInfo[0].ui_Name);
-                  sessionStorage.setItem('isLogin','true');
-                  this.$router.push({name:'getUser'});
-                  window.location.reload()
-                }else{
-                  this.$message({
-                    message: data.backResult,
-                    type: 'error'
-                  });
-                }
+            this.$store.dispatch('Logining',loginParams)
+              .then((data)=>{
+                sessionStorage.setItem('admin',data.userInfo[0].ui_Name);
+                sessionStorage.setItem('isLogin','true');
+                this.$router.push({name:'getUser'});
+                window.location.reload()
+              },err=>{
+                this.$message({
+                  message: err,
+                  type: 'error'
+                });
               })
           } else {
             console.log('error submit!!');
