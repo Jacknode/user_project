@@ -122,7 +122,7 @@
           loginUserPass: 123,
           orderTypeCode: this.formType.id,
           orderTypeName: this.formType.name
-        }
+        };
         this.$store.dispatch('addOrderSubmit',AddOrderType)
           .then(()=>{
             this.$notify({

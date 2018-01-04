@@ -82,16 +82,7 @@
                         <router-link to="/home/profile">用户订单管理</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/lntegration">用户积分明细管理</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/lntegrationWeight">积分项目权重管理</router-link>
-                      </li>
-                      <li>
                         <router-link to="/home/orderType">订单类型管理</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/commonContact">常用联系人管理</router-link>
                       </li>
                       <li>
                         <router-link to="/home/systemInformation">系统信息管理</router-link>
@@ -102,6 +93,16 @@
                       <li>
                         <router-link to="/home/integralType">积分类型管理</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/commonContact">常用联系人管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/lntegration">用户积分明细管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/lntegrationWeight">积分项目权重管理</router-link>
+                      </li>
+
                     </ul>
                   </li>
                   <!-- /main -->

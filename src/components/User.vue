@@ -213,7 +213,7 @@
               message: err,
               type: 'error'
             });
-          })
+          });
         this.dialogFormVisible = false;
       },
       //修改用户提交
