@@ -154,6 +154,10 @@
           }, {
             value: '1',
             label: '已删除'
+          },
+          {
+            value: '',
+            label: '所有'
           }
         ],
         values:'',

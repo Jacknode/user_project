@@ -191,7 +191,7 @@
       },
       //查询
       search() {
-        this.username = this.username.trim()
+        this.username = this.username.trim();
         this.initData(1, this.username)
       },
       //初始化修改数据
@@ -215,18 +215,22 @@
           }
         })
           .then(data => {
-            var data = data.data
-            publicInit.isBackCode(data, this)
-            if (data.backCode == '200') {
+            var data = data.data;
+            if (Number(data.resultcode) == 200) {
               this.$message({
                 showClose: true,
-                message: data.backResult,
+                message: data.resultcontent,
                 type: 'success'
               });
               this.initData(1)
+            }else{
+              this.$message({
+                showClose: true,
+                message: data.resultcontent,
+                type: 'error'
+              });
             }
             this.dialogFormVisible = false
-
           })
       },
       //修改用户提交
